@@ -1,49 +1,10 @@
 <?php
 session_start();
-
-// Check if the user is logged in
+// Redirect to login page if user is not logged in
 if (!isset($_SESSION['studentID'])) {
-  // Redirect to login page if not logged in
-  header("Location: student-login.php");
-  exit();
+    header("Location: student-login.php");
+    exit();
 }
-
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "uniselhostel";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-$studentID = $_SESSION['studentID'];
-
-// Fetch student booking details from the database
-$sql = "SELECT * FROM student WHERE studentID = '$studentID'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // Output data of each row
-  while ($row = $result->fetch_assoc()) {
-    $fullname = $row["fullname"];
-    $status = $row["status"];
-    $block = $row["block"];
-    $floor = $row["floor"];
-    $unit = $row["unit"];
-    $roomNumber = $row["roomNumber"];
-    $created_at = $row["created_at"];
-  }
-} else {
-  $error = "No booking details found.";
-}
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -139,42 +100,41 @@ $conn->close();
         <div class="col-md-6 mt-4 mx-auto">
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
-              <h5 class="text-center mb-4 mt-2"><strong>Booking Details</strong></h5>
-              <p><strong>Name:</strong>
-                <?php echo $fullname; ?>
-              </p>
-              <p><strong>Matric ID:</strong>
-                <?php echo $studentID; ?>
-              </p>
-              <p><strong>Block:</strong>
-                <?php echo $block; ?>
-              </p>
-              <p><strong>Floor:</strong>
-                <?php echo $floor; ?>
-              </p>
-              <p><strong>Unit:</strong>
-                <?php echo $unit; ?>
-              </p>
-              <p><strong>Room Number:</strong>
-                <?php echo $roomNumber; ?>
-              </p>
-              <p><strong>Booking Date:</strong>
-                <?php echo $created_at; ?>
-              </p>
-              <p><strong>Booking Status:</strong><span style="font-weight: bold;">
-                  <?php echo $status; ?>
-              </p>
-              <?php if (isset($error)) { ?>
-                <p class="text-danger">
-                  <?php echo $error; ?>
-                </p>
-              <?php } ?>
+            <h5 class="text-center mb-4 mt-2"><strong>Booking Details</strong></h5>
+                            <div id="bookingDetails"></div> <!-- Container for booking details -->
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script>
+            // Make an AJAX request to get booking details
+            fetch('get_booking_status.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Display booking details in the container
+                    const bookingDetailsContainer = document.getElementById('bookingDetails');
+                    if (data.success) {
+                        const bookingDetails = data.bookingDetails;
+                        bookingDetailsContainer.innerHTML = `
+                            <p><strong>Name:</strong> ${bookingDetails.fullname}</p>
+                            <p><strong>Matric ID:</strong> ${bookingDetails.studentID}</p>
+                            <p><strong>Block:</strong> ${bookingDetails.block}</p>
+                            <p><strong>Floor:</strong> ${bookingDetails.floor}</p>
+                            <p><strong>Unit:</strong> ${bookingDetails.unit}</p>
+                            <p><strong>Room Number:</strong> ${bookingDetails.roomNumber}</p>
+                            <p><strong>Booking Date:</strong> ${bookingDetails.created_at}</p>
+                            <p><strong>Booking Status:</strong> ${bookingDetails.status}</p>
+                        `;
+                    } else {
+                        bookingDetailsContainer.innerHTML = `<p class="text-danger">${data.message}</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        </script>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/sidebarmenu.js"></script>

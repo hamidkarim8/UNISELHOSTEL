@@ -11,6 +11,9 @@
     body {
       background: url('../assets/images/backgrounds/backimage5.png') no-repeat center center fixed;
       background-size: cover;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
 
     .logout-btn {

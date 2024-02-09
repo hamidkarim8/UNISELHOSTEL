@@ -75,6 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       margin: auto;
       margin-top: 50px;
     }
+    .form-select {
+  width: auto;
+  min-width: fit-content;
+}
   </style>
 </head>
 
@@ -143,63 +147,103 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-md-6 mt-4">
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
-              <h5 class="text-center mb-3 mt-2"><strong>Room Booking</strong></h5>
-              <form method="post" action="make-booking.php" id="roomBookingForm">
-                <div class="mb-3">
-                  <label for="blockSelection" class="form-label">Block:</label>
-                  <select class="form-select" id="blockSelection" name="block">
-                    <option value="Block A">Block
-                      A</option>
-                    <option value="Block B">Block
-                      B</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="floorSelection" class="form-label">Floor:</label>
-                  <select class="form-select" id="floorSelection" name="floor">
-                    <option value="Floor 1">Floor
-                      1</option>
-                    <option value="Floor 2">Floor
-                      2</option>
-                    <option value="Floor 3">Floor
-                      3</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="unitSelection" class="form-label">Unit:</label>
-                  <select class="form-select" id="unitSelection" name="unit">
-                    <option value="Unit 1">Unit
-                      1</option>
-                    <option value="Unit 2">Unit
-                      2</option>
-                    <option value="Unit 3">Unit
-                      3</option>
-                    <option value="Unit 4">Unit
-                      4</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="roomNumberSelection" class="form-label">Room
-                    Number:</label>
-                  <select class="form-select" id="roomNumberSelection" name="roomNumber">
-                    <option value="Room 1">Room
-                      1</option>
-                    <option value="Room 2">Room
-                      2</option>
-                    <option value="Room 3">Room
-                      3</option>
-                  </select>
-                </div>
-                <div class="text-center mt-3">
-                  <button type="submit" class="btn btn-primary mb-2">Submit</button>
-                </div>
-              </form>
+            <h5 class="text-center mb-3 mt-2"><strong>Room Booking</strong></h5>
+<!-- Button filter -->
+<div class="mb-3">
+  <label for="statusFilter" class="form-label">Filter by Status:</label>
+  <select class="form-select" id="statusFilter" onchange="filterRooms()">
+    <option value="All">All</option>
+    <option value="Available">Available</option>
+    <option value="Unavailable">Unavailable</option>
+  </select>
+</div>
+
+<!-- Table to display rooms -->
+<table class="table mt-4 table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Block</th>
+      <th>Floor</th>
+      <th>Unit</th>
+      <th>Room Number</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="roomTableBody">
+    <!-- Room data will be displayed here -->
+  </tbody>
+</table>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+
+
+// Function to fetch and display filtered rooms
+function filterRooms() {
+  const statusFilter = document.getElementById('statusFilter').value;
+  fetch('get_rooms.php')
+    .then(response => response.json())
+    .then(data => {
+      const roomTableBody = document.getElementById('roomTableBody');
+      roomTableBody.innerHTML = ''; // Clear existing data
+      data.forEach(room => {
+        if (statusFilter === 'All' || room.status === statusFilter) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+              <td>${room.block}</td>
+              <td>${room.floor}</td>
+              <td>${room.unit}</td>
+              <td>${room.roomNumber}</td>
+              <td>${room.status}</td>
+              <td>
+              <button class="btn btn-danger btn-sm" onclick="bookHostel(${room.hostelID})" ${room.status !== 'Available' ? 'disabled' : ''}>
+                    Book
+                </button>
+              </td>
+          `;
+          roomTableBody.appendChild(row);
+        }
+      });
+    });
+}
+// Function to book hostel room
+function bookHostel(hostelID) {
+    if (confirm('Are you sure you want to book this room?')) {
+        fetch('book_room.php', {
+            method: 'POST',
+            body: JSON.stringify({ hostelID: hostelID }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Booking was successful
+                filterRooms(); // Reload the room list
+                alert('Room booked successfully!');
+            } else {
+                // Booking failed
+                alert('Failed to book room: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred, please try again');
+        });
+    }
+}
+
+
+// Call filterRooms function when the page loads
+filterRooms();
+</script>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/sidebarmenu.js"></script>
