@@ -103,7 +103,7 @@
               <p class="text-left mb-1">FROM: COLLEGE RESIDENT UNITS</p>
               <p class="text-left mb-1">DATE: 31 MARCH 2024</p>
               <hr>
-              <p class="text-center">Assalamualaikum and greetings to all college residents,</p>
+              <p class="text-center">test and greetings to all college residents,</p>
               <p class="mb-4" style="text-align: justify;">We are delighted to share the exciting news that room
                 bookings for the upcoming semester (1/24/34) are now open.
                 This opportunity allows all students to plan and secure their accommodation for the upcoming academic
