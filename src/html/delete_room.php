@@ -1,45 +1,33 @@
 <?php
-// Include the database connection
-include_once 'db_connection.php';
+// Include database connection
+include 'db_connection.php';
 
-// Check if room ID is provided in the request
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['hostelID'])) {
-    // Initialize response array
-    $response = array();
+// Decode JSON data received from the client
+$data = json_decode(file_get_contents("php://input"));
 
-    // Retrieve room ID from the request
-    $hostelID = $_POST['hostelID'];
+// Check if hostelID is provided
+if (!empty($data->hostelID)) {
+    // Prepare and bind the SQL statement
+    $stmt = $conn->prepare("DELETE FROM hostel WHERE hostelID = ?");
+    $stmt->bind_param("i", $data->hostelID);
 
-    // Prepare SQL statement to delete the room
-    $sql = "DELETE FROM hostel WHERE hostelID = ?";
-    
-    // Prepare and bind parameters
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $hostelID);
-
-    // Execute the statement
+    // Execute the SQL statement
     if ($stmt->execute()) {
-        // Room deleted successfully
-        $response['success'] = true;
-        $response['message'] = "Room deleted successfully!";
+        // Return success response with HTTP status code 200 OK
+        http_response_code(200);
+        echo json_encode(array("success" => true));
     } else {
-        // Failed to delete room
-        $response['success'] = false;
-        $response['message'] = "Failed to delete room: " . $conn->error;
+        // Return error response with HTTP status code 500 Internal Server Error
+        http_response_code(500);
+        echo json_encode(array("success" => false));
     }
 
-    // Close statement
+    // Close statement and database connection
     $stmt->close();
-
-    // Close connection
     $conn->close();
-
-    // Return JSON response
-    header('Content-Type: application/json');
-    echo json_encode($response);
 } else {
-    // If the request method is not POST or room ID is not provided
-    http_response_code(400); // Bad Request
-    echo json_encode(array("error" => "Bad Request"));
+    // Return error response if hostelID is not provided with HTTP status code 400 Bad Request
+    http_response_code(400);
+    echo json_encode(array("success" => false, "message" => "Hostel ID is required"));
 }
 ?>

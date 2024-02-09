@@ -20,10 +20,14 @@
     }
 
     .card {
-      max-width: 650px;
-      margin: auto;
-      margin-top: 50px;
-    }
+  width: 700px;
+  margin: auto; /* Center the card horizontally */
+  margin-top: 50px;
+  margin-bottom: 50px; /* Add margin at the bottom for spacing */
+}
+.table th{
+  font-weight: bold
+}
   </style>
 </head>
 
@@ -61,11 +65,11 @@
               <span class="hide-menu">MENU</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./make-booking.php" aria-expanded="false">
+              <a class="sidebar-link" href="./admin-manage-room.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                <span class="hide-menu">Make Booking</span>
+                <span class="hide-menu">Manage Room</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -150,10 +154,10 @@
 </div>
 
 <!-- Table to display rooms -->
-<table class="table mt-4">
+<table class="table mt-4 table-bordered table-striped">
   <thead>
     <tr>
-      <th>No.</th>
+      <!-- <th>No.</th> -->
       <th>Block</th>
       <th>Floor</th>
       <th>Unit</th>
@@ -202,46 +206,53 @@
 
   // Function to fetch and display all rooms
   function fetchRooms() {
-    fetch('get_rooms.php')
-    .then(response => response.json())
-    .then(data => {
-        const roomTableBody = document.getElementById('roomTableBody');
-        roomTableBody.innerHTML = ''; // Clear existing data
-        data.forEach(room => {
+      fetch('get_rooms.php')
+        .then(response => response.json())
+        .then(data => {
+          const roomTableBody = document.getElementById('roomTableBody');
+          roomTableBody.innerHTML = ''; // Clear existing data
+          data.forEach(room => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${room.hostelID}</td>
                 <td>${room.block}</td>
                 <td>${room.floor}</td>
                 <td>${room.unit}</td>
                 <td>${room.roomNumber}</td>
-                <td>${room.status}</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" onclick="deleteRoom(${room.hostelID})">
+                  <select class="form-select" onchange="updateRoomStatus(${room.hostelID}, this.value)">
+                    <option value="Available" ${room.status === 'Available' ? 'selected' : ''}>Available</option>
+                    <option value="Unavailable" ${room.status === 'Unavailable' ? 'selected' : ''}>Unavailable</option>
+                  </select>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRoomStatus(${room.hostelID})">
                         <i class="ti ti-trash"></i>
                     </button>
                 </td>
             `;
             roomTableBody.appendChild(row);
+          });
         });
-    });
-}
+    }
 
-function deleteRoom(hostelID) {
+    function deleteRoomStatus(hostelID) {
     if (confirm('Are you sure you want to delete this room?')) {
         fetch('delete_room.php', {
             method: 'POST',
+            body: JSON.stringify({ hostelID: hostelID }),
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ hostelID: hostelID }) // Pass hostelID in the request body
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete room');
+            }
+            return response.json();
+        })
         .then(data => {
-          console.log(data);
             if (data.success) {
-                // If room deleted successfully, fetch and display rooms again
-                fetchRooms();
+                fetchRooms(); // Reload the room list
                 alert('Room deleted successfully!');
             } else {
                 alert('Failed to delete room');
@@ -253,6 +264,37 @@ function deleteRoom(hostelID) {
         });
     }
 }
+
+function updateRoomStatus(hostelID, status) {
+      fetch('update_room_status.php', {
+          method: 'POST',
+          body: JSON.stringify({
+            hostelID: hostelID,
+            status: status
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to update room status');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.success) {
+            fetchRooms(); // Reload the room list
+            alert('Room status updated successfully!');
+          } else {
+            alert('Failed to update room status');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred, please try again');
+        });
+    }
 
 
   // Call fetchRooms function when the page loads
