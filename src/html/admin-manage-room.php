@@ -76,13 +76,13 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./check-status.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-alert-circle"></i>
-                </span>
-                <span class="hide-menu">Booking Details</span>
-              </a>
-            </li>
+                            <a class="sidebar-link" href="./admin-manage-student.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-alert-circle"></i>
+                                </span>
+                                <span class="hide-menu">Manage Student</span>
+                            </a>
+                        </li>
           </ul>
         </nav>
       </div>
