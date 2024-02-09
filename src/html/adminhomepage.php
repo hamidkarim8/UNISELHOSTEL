@@ -51,7 +51,7 @@
             <div>
                 <br></br>
                 <div class="brand-logo d-flex align-items-center justify-content-between mb-10">
-                    <a href="./index.php" class="text-nowrap logo-img">
+                    <a href="./adminhomepage.php" class="text-nowrap logo-img">
                         <img src="../assets/images/logos/logounisel.png" width="200" alt="" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -78,11 +78,11 @@
                             <span class="hide-menu">MENU</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./make-booking.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./admin-manage-room.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-article"></i>
                                 </span>
-                                <span class="hide-menu">Make Booking</span>
+                                <span class="hide-menu">Manage Room</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
