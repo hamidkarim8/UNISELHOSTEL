@@ -34,6 +34,10 @@
     .table th {
       font-weight: bold
     }
+    .form-select {
+  width: auto;
+  min-width: fit-content;
+}
   </style>
 </head>
 
@@ -111,7 +115,17 @@
         <div class="col-md-6 mt-4 mx-auto">
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
-              <h5 class="text-center mb-3 mt-2"><strong>Student Management</strong></h5>
+              <h5 class="text-center mb-3 mt-2"><strong>Booking Management</strong></h5>
+              <!-- Button filter -->
+<div class="mb-3">
+  <label for="statusFilter" class="form-label">Filter by Status:</label>
+  <select class="form-select" id="statusFilter" onchange="fetchBooking()">
+    <option value="All">All</option>
+    <option value="PENDING">Pending</option>
+    <option value="APPROVED">Approved</option>
+    <option value="REJECTED">Rejected</option>
+  </select>
+</div>
               <!-- Table to display rooms -->
               <table class="table mt-4 table-bordered table-striped">
                 <thead>
@@ -120,8 +134,8 @@
                     <th>Name</th>
                     <th>Matric No</th>
                     <th>Room</th>
-                    <th>Status</th>
-                    <th>Blacklist Status</th>
+                    <th>Booking Date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="roomTableBody">
@@ -136,110 +150,100 @@
   </div>
   <script>
 
-    // Function to fetch and display all rooms
-    function fetchStudents() {
-    fetch('get_student_management.php')
-      .then(response => response.json())
-      .then(data => {
-        const roomTableBody = document.getElementById('roomTableBody');
-        roomTableBody.innerHTML = ''; // Clear existing data
-        data.forEach(student => {
-          const row = document.createElement('tr');
-          const room = student.room; // Move the declaration here
-          row.innerHTML = `
-    <td>${student.fullname}</td>
-    <td>${student.studentID}</td>
-    <td>${room}</td>
-    <td>
-        <select class="form-select status-select" data-student-id="${student.studentID}">
-            <option value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
-            <option value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
-            <option value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
-        </select>
-    </td>
-    <td>
-        <select class="form-select blacklist-select" data-student-id="${student.studentID}">
-            <option value="ELIGIBLE" ${student.blacklist === 'ELIGIBLE' ? 'selected' : ''}>Eligible</option>
-            <option value="BLACKLISTED" ${student.blacklist === 'BLACKLISTED' ? 'selected' : ''}>Blacklisted</option>
-        </select>
-    </td>
-`;
-          roomTableBody.appendChild(row);
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-
-    // Function to update student status
-    function updateStudentStatus(studentID, status) {
-      console.log('Updating student status:', studentID, status); // Add this debug statement to log the parameters
-      fetch('update_student_status.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            studentID: studentID,
-            status: status
-          }),
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to update student status');
-          }
-          return response.json();
-        })
+function fetchBooking() {
+    const statusFilter = document.getElementById('statusFilter').value;
+    fetch('get_booking_management.php')
+        .then(response => response.json())
         .then(data => {
-          console.log('Response:', data); // Add this debug statement to log the response from the server
-          if (data.success) {
-            fetchStudents(); // Refresh student data
-            alert('Student status updated successfully');
-          } else {
-            alert('Failed to update student status: ' + data.error);
-          }
+            const roomTableBody = document.getElementById('roomTableBody');
+            roomTableBody.innerHTML = ''; // Clear existing data
+            data.forEach(student => {
+                if (statusFilter === 'All' || student.status === statusFilter) {
+                const row = document.createElement('tr');
+                const room = student.room; // Move the declaration here
+                row.innerHTML = `
+                    <td>${student.fullname}</td>
+                    <td>${student.studentID}</td>
+                    <td>${room}</td>
+                    <td>${student.created_at}</td>
+                    <td style="color: ${getStatusColor(student.status)};">
+                        ${student.status === 'PENDING' ? `
+                            <button class="btn btn-success btn-sm" onclick="approveBooking(${student.bookingID})"}>
+                                Approve
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="rejectBooking(${student.bookingID})"}>
+                                Reject
+                            </button>` : student.status}
+                    </td>
+                `;
+                roomTableBody.appendChild(row);
+                        }
+            });
         })
         .catch(error => {
-          console.error('Error:', error);
-          alert('An error occurred while updating student status');
+            console.log(error);
         });
-    }
+}
 
-    // Function to update student blacklist status
-    function updateBlacklistStatus(studentID, blacklist) {
-      console.log('Updating student blacklist status:', studentID, blacklist); // Add this debug statement to log the parameters
-      fetch('update_blacklist_status.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            studentID: studentID,
-            blacklist: blacklist
-          }),
+function getStatusColor(status) {
+    if (status === 'APPROVED') {
+        return 'green';
+    } else if (status === 'REJECTED') {
+        return 'red';
+    } else {
+        return 'inherit';
+    }
+}
+
+  function approveBooking(bookingID) {
+    if (confirm('Are you sure you want to approve this booking?')) {
+        fetch('approve_booking.php', {
+            method: 'POST',
+            body: JSON.stringify({ bookingID: bookingID }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
         })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to update student blacklist status');
-          }
-          return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-          console.log('Response:', data); // Add this debug statement to log the response from the server
-          if (data.success) {
-            fetchStudents(); // Refresh student data
-            alert('Student blacklist status updated successfully');
-          } else {
-            alert('Failed to update student blacklist status: ' + data.error);
-          }
+            if (data.success) {
+                fetchBooking(); // Reload the room list
+                alert('Room booking successfully approved!');
+            } else {
+                alert('Failed to approve booking: ' + data.error);
+            }
         })
         .catch(error => {
-          console.error('Error:', error);
-          alert('An error occurred while updating student blacklist status');
+            console.error('Error:', error);
+            alert('An error occurred, please try again');
         });
     }
+}
+  function rejectBooking(bookingID) {
+    if (confirm('Are you sure you want to approve this booking?')) {
+        fetch('reject_booking.php', {
+            method: 'POST',
+            body: JSON.stringify({ bookingID: bookingID }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchBooking(); // Reload the room list
+                alert('Room booking successfully rejected!');
+            } else {
+                alert('Failed to reject booking: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred, please try again');
+        });
+    }
+}
+
 
     document.addEventListener('DOMContentLoaded', function() {
     // Attach event listener to the parent tbody element
@@ -260,7 +264,7 @@
 });
 
     // Call fetchRooms function when the page loads
-    fetchStudents();
+    fetchBooking();
 
   </script>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>

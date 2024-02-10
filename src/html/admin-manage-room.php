@@ -84,6 +84,14 @@
                                 <span class="hide-menu">Manage Student</span>
                             </a>
                         </li>
+            <li class="sidebar-item">
+                            <a class="sidebar-link" href="./admin-manage-booking.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-alert-circle"></i>
+                                </span>
+                                <span class="hide-menu">Manage Booking</span>
+                            </a>
+                        </li>
           </ul>
         </nav>
       </div>
