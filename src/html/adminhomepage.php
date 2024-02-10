@@ -19,7 +19,7 @@
             border: none;
         }
 
-        .card-body {
+        .card {
             max-width: 650px;
             margin: auto;
             margin-top: 50px;
@@ -30,14 +30,15 @@
             max-width: 500px;
         }
 
-        .btn-primary {
+        /* .btn-primary {
             margin-top: 20px;
-        }
+        } */
 
         .btn-center {
             display: flex;
             justify-content: center;
         }
+        
     </style>
 </head>
 
@@ -127,25 +128,27 @@
                             <div class="text-nowrap logo-img text-center d-block py-1 w-100 mb-4 mt-4">
                                 <img src="../assets/images/logos/logounisel.png" width="250" alt="">
                             </div>
-                            <h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>
-                            <h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>
-                            <h5 class="text-center">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>
-                            <br></br>
-                            <form action="update_memo.php" method="POST" class="w-100">
-                                <div class="mb-3">
-                                    <label for="memo_date" class="form-label">DATE:</label>
-                                    <input type="text" class="form-control" id="memo_date" name="memo_date"
-                                        placeholder="Enter memo date" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="memo_content" class="form-label">Memo Content:</label>
-                                    <textarea class="form-control" name="memo_content" id="memo_content" rows="6"
-                                        placeholder="Enter new memo content" required></textarea>
-                                </div>
-                                <div class="btn-center"> <!-- Center the button -->
-                                    <button type="submit" class="btn btn-primary">Update Memo</button>
-                                </div>
-                            </form>
+                            <!-- display memo -->
+                            <?php
+                            // Include the PHP script to fetch memos
+                            include 'get_memos.php';
+                            
+                            // Loop through the memos and display them
+                            foreach ($memos as $memo) {
+                                echo'<h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>';
+                                echo'<h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>';
+                                echo'<h5 class="text-center mb-4">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>';
+                                echo '<p class="text-left mb-1">FROM: ' . $memo['sender'] . '</p>';
+                                echo '<p class="text-left mb-1">TO: ' . $memo['recipient'] . '</p>';
+                                echo '<p class="text-left mb-1">DATE: ' . $memo['date'] . '</p>';
+                                echo '<hr>';
+                                echo '<p class="mb-2" style="text-align: center;">' . $memo['greeting'] . '</p>';
+                                echo '<p class="mb-4" style="text-align: justify;">' . $memo['content'] . '</p>';
+                            }
+                            ?>
+                            <div class="btn-center mb-4">
+                                <button class="btn btn-primary" onclick="openUpdateModal()">Update Memo</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,6 +156,82 @@
         </div>
     </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateMemoModal" tabindex="-1" aria-labelledby="updateMemoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateMemoModalLabel">New Memo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateMemoForm">
+                        <div class="mb-3">
+                            <label for="memo_from" class="form-label">From:</label>
+                            <input type="text" class="form-control" name="memo_from" id="memo_from" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">To:</label>
+                            <input type="text" class="form-control" name="memo_to" id="memo_to" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date:</label>
+                            <input type="date" class="form-control" name="memo_date" id="memo_date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="memo_greeting" class="form-label">Greeting:</label>
+                            <textarea class="form-control" name="memo_greeting" id="memo_greeting" rows="6" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="memo_content" class="form-label">Content:</label>
+                            <textarea class="form-control" name="memo_content" id="memo_content" rows="6" required></textarea>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateMemoBtn">Submit Memo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+                function openUpdateModal() {
+            // Show the modal
+            var updateMemoModal = new bootstrap.Modal(document.getElementById('updateMemoModal'));
+            updateMemoModal.show();
+        }
+
+        // Handle form submission
+        document.getElementById("updateMemoBtn").addEventListener("click", function () {
+            // Get form data
+            var formData = new FormData(document.getElementById("updateMemoForm"));
+
+            // Send AJAX request to update_memos.php
+            fetch('update_memos.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    // Close the modal
+                    var updateMemoModal = bootstrap.Modal.getInstance(document.getElementById('updateMemoModal'));
+                    updateMemoModal.hide();
+
+                    // Display success or error message
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error updating memo');
+                });
+        });
+    </script>
+
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/sidebarmenu.js"></script>

@@ -14,7 +14,10 @@ $sql = "SELECT bl.*, h.block, h.floor, h.unit, h.roomNumber, s.fullname
         FROM bookingList AS bl
         JOIN hostel AS h ON bl.hostelID = h.hostelID
         JOIN student AS s ON bl.studentID = s.studentID
-        WHERE bl.studentID = '$studentID'";
+        WHERE bl.studentID = '$studentID'
+        ORDER BY bl.bookingID DESC
+        LIMIT 1";
+
 
 $result = $conn->query($sql);
 
