@@ -101,7 +101,8 @@ if (!isset($_SESSION['studentID'])) {
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
             <h5 class="text-center mb-4 mt-2"><strong>Booking Details</strong></h5>
-                            <div id="bookingDetails"></div> <!-- Container for booking details -->
+                            <div id="bookingDetails"></div>
+                            <div class="mb-4" id="makeNewBookingBtnContainer"></div> <!-- Container for booking details -->
             </div>
           </div>
         </div>
@@ -141,6 +142,20 @@ fetch('get_booking_status.php')
                     <p><strong>Booking Date:</strong> ${bookingDetails.created_at}</p>
                     <p><strong>Booking Status:</strong> <span style="color: ${statusColor}; font-weight: bold;">${bookingDetails.status}</span></p>
                 `;
+                    // Check if the booking status is "REJECTED"
+    if (bookingDetails.status === 'REJECTED') {
+        // If the status is "REJECTED", create a "Make new booking" button
+        const makeNewBookingBtnContainer = document.getElementById('makeNewBookingBtnContainer');
+        makeNewBookingBtnContainer.innerHTML = `
+        <div class="text-center">
+
+            <button class="btn btn-primary mt-3" onclick="window.location.href='./make-booking.php'">
+                Make new booking
+            </button>
+            </div>
+
+        `;
+    }
             } else {
                 bookingDetailsContainer.innerHTML = `<p class="text-danger">${data.message}</p>`;
             }
