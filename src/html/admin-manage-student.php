@@ -138,23 +138,23 @@
           const row = document.createElement('tr');
           const room = student.room; // Move the declaration here
           row.innerHTML = `
-            <td>${student.fullname}</td>
-            <td>${student.studentID}</td>
-            <td>${room}</td>
-            <td>
-              <select class="form-select" onchange="updateStudentStatus(${student.studentID}, this.value)">
-                <option value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
-                <option value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
-                <option value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
-              </select>
-            </td>
-            <td>
-              <select class="form-select" onchange="updateBlacklistStatus(${student.studentID}, this.value)">
-                <option value="Eligible" ${student.blacklist === 'ELIGIBLE' ? 'selected' : ''}>Eligible</option>
-                <option value="Blacklisted" ${student.blacklist === 'BLACKLISTED' ? 'selected' : ''}>Blacklisted</option>
-              </select>
-            </td>
-          `;
+    <td>${student.fullname}</td>
+    <td>${student.studentID}</td>
+    <td>${room}</td>
+    <td>
+        <select class="form-select status-select" data-student-id="${student.studentID}">
+            <option value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
+            <option value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
+            <option value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
+        </select>
+    </td>
+    <td>
+        <select class="form-select blacklist-select" data-student-id="${student.studentID}">
+            <option value="ELIGIBLE" ${student.blacklist === 'ELIGIBLE' ? 'selected' : ''}>Eligible</option>
+            <option value="BLACKLISTED" ${student.blacklist === 'BLACKLISTED' ? 'selected' : ''}>Blacklisted</option>
+        </select>
+    </td>
+`;
           roomTableBody.appendChild(row);
         });
       })
@@ -199,8 +199,8 @@
     }
 
     // Function to update student blacklist status
-    function updateBlacklistStatus(studentID, blacklistStatus) {
-      console.log('Updating student blacklist status:', studentID, blacklistStatus); // Add this debug statement to log the parameters
+    function updateBlacklistStatus(studentID, blacklist) {
+      console.log('Updating student blacklist status:', studentID, blacklist); // Add this debug statement to log the parameters
       fetch('update_blacklist_status.php', {
           method: 'POST',
           headers: {
@@ -208,7 +208,7 @@
           },
           body: JSON.stringify({
             studentID: studentID,
-            blacklistStatus: blacklistStatus
+            blacklist: blacklist
           }),
         })
         .then(response => {
@@ -231,6 +231,24 @@
           alert('An error occurred while updating student blacklist status');
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listener to the parent tbody element
+    document.getElementById('roomTableBody').addEventListener('change', function(event) {
+        // Check if the target element is a select element
+        if (event.target.tagName.toLowerCase() === 'select') {
+            const studentID = event.target.dataset.studentId;
+            const value = event.target.value;
+            
+            // Check if the select element is for updating student status or blacklist status
+            if (event.target.classList.contains('status-select')) {
+                updateStudentStatus(studentID, value);
+            } else if (event.target.classList.contains('blacklist-select')) {
+                updateBlacklistStatus(studentID, value);
+            }
+        }
+    });
+});
 
     // Call fetchRooms function when the page loads
     fetchStudents();

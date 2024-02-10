@@ -27,6 +27,7 @@
   margin: auto; /* Center the card horizontally */
   margin-top: 50px;
   margin-bottom: 50px; /* Add margin at the bottom for spacing */
+
 }
 .table th{
   font-weight: bold
