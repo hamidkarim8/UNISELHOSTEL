@@ -109,31 +109,45 @@ if (!isset($_SESSION['studentID'])) {
     </div>
   </div>
   <script>
-            // Make an AJAX request to get booking details
-            fetch('get_booking_status.php')
-                .then(response => response.json())
-                .then(data => {
-                    // Display booking details in the container
-                    const bookingDetailsContainer = document.getElementById('bookingDetails');
-                    if (data.success) {
-                        const bookingDetails = data.bookingDetails;
-                        bookingDetailsContainer.innerHTML = `
-                            <p><strong>Name:</strong> ${bookingDetails.fullname}</p>
-                            <p><strong>Matric ID:</strong> ${bookingDetails.studentID}</p>
-                            <p><strong>Block:</strong> ${bookingDetails.block}</p>
-                            <p><strong>Floor:</strong> ${bookingDetails.floor}</p>
-                            <p><strong>Unit:</strong> ${bookingDetails.unit}</p>
-                            <p><strong>Room Number:</strong> ${bookingDetails.roomNumber}</p>
-                            <p><strong>Booking Date:</strong> ${bookingDetails.created_at}</p>
-                            <p><strong>Booking Status:</strong> ${bookingDetails.status}</p>
-                        `;
-                    } else {
-                        bookingDetailsContainer.innerHTML = `<p class="text-danger">${data.message}</p>`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+fetch('get_booking_status.php')
+        .then(response => response.json())
+        .then(data => {
+            // Display booking details in the container
+            const bookingDetailsContainer = document.getElementById('bookingDetails');
+            if (data.success) {
+                const bookingDetails = data.bookingDetails;
+
+                // Set color based on booking status
+                let statusColor = '';
+                switch (bookingDetails.status) {
+                    case 'APPROVED':
+                        statusColor = 'green';
+                        break;
+                    case 'REJECTED':
+                        statusColor = 'red';
+                        break;
+                    default:
+                        statusColor = 'black';
+                }
+
+                // Construct HTML with dynamically colored status
+                bookingDetailsContainer.innerHTML = `
+                    <p><strong>Name:</strong> ${bookingDetails.fullname}</p>
+                    <p><strong>Matric ID:</strong> ${bookingDetails.studentID}</p>
+                    <p><strong>Block:</strong> ${bookingDetails.block}</p>
+                    <p><strong>Floor:</strong> ${bookingDetails.floor}</p>
+                    <p><strong>Unit:</strong> ${bookingDetails.unit}</p>
+                    <p><strong>Room Number:</strong> ${bookingDetails.roomNumber}</p>
+                    <p><strong>Booking Date:</strong> ${bookingDetails.created_at}</p>
+                    <p><strong>Booking Status:</strong> <span style="color: ${statusColor}; font-weight: bold;">${bookingDetails.status}</span></p>
+                `;
+            } else {
+                bookingDetailsContainer.innerHTML = `<p class="text-danger">${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
         </script>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
