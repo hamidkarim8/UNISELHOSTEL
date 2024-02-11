@@ -10,7 +10,7 @@ if (!isset($_SESSION['studentID'])) {
 
 $studentID = $_SESSION['studentID'];
 
-$sql = "SELECT bl.*, h.block, h.floor, h.unit, h.roomNumber, s.fullname
+$sql = "SELECT bl.*, h.block, h.floor, h.unit, h.roomNumber, s.fullname, DATE_FORMAT(bl.created_at, '%d-%m-%Y %H:%i:%s') AS created_at
         FROM bookingList AS bl
         JOIN hostel AS h ON bl.hostelID = h.hostelID
         JOIN student AS s ON bl.studentID = s.studentID
