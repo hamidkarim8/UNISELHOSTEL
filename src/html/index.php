@@ -104,9 +104,9 @@
                                 echo'<h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>';
                                 echo'<h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>';
                                 echo'<h5 class="text-center mb-4">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>';
-                                echo '<p class="text-left mb-1">FROM: ' . $memo['sender'] . '</p>';
-                                echo '<p class="text-left mb-1">TO: ' . $memo['recipient'] . '</p>';
-                                echo '<p class="text-left mb-1">DATE: ' . $memo['date'] . '</p>';
+                                echo '<p class="text-left mb-1"><strong>FROM</strong>: ' . $memo['sender'] . '</p>';
+                                echo '<p class="text-left mb-1"><strong>TO</strong>: ' . $memo['recipient'] . '</p>';
+                                echo '<p class="text-left mb-1"><strong>DATE</strong>: ' . $memo['date'] . '</p>';
                                 echo '<hr>';
                                 echo '<p class="mb-2" style="text-align: center;">' . $memo['greeting'] . '</p>';
                                 echo '<p class="mb-4" style="text-align: justify;">' . $memo['content'] . '</p>';
