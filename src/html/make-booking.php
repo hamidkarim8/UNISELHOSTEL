@@ -229,8 +229,7 @@ function bookHostel(hostelID) {
                 filterRooms(); // Reload the room list
                 alert('Room booked successfully!');
             } else {
-                // Booking failed
-                alert('Failed to book room: ' + data.error);
+              alert(data.message);
             }
         })
         .catch(error => {
