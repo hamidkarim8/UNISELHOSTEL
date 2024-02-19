@@ -18,6 +18,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Sanitize input
         $hostelID = mysqli_real_escape_string($conn, $data->hostelID);
 
+        // Check if the student has a booking with approved or pending status
+        $bookingQuery = "SELECT * FROM bookingList WHERE studentID='$studentID' ORDER BY created_At DESC LIMIT 1";
+        $bookingResult = mysqli_query($conn, $bookingQuery);
+
+        if ($bookingResult) {
+            if (mysqli_num_rows($bookingResult) > 0) {
+                $bookingData = mysqli_fetch_assoc($bookingResult);
+                $bookingStatus = $bookingData['status'];
+
+                if ($bookingStatus === 'APPROVED' || $bookingStatus === 'PENDING') {
+                    // If the booking status is approved or pending, don't allow booking
+                    $response = array("success" => false, "message" => "Failed! You already made a booking with status: $bookingStatus");
+                    echo json_encode($response);
+                    exit;
+                }
+            }
+        } else {
+            // Error handling for the booking query
+            $response = array("success" => false, "error" => "Failed to fetch booking information: " . mysqli_error($conn));
+            echo json_encode($response);
+            exit;
+        }
+
         // Update room status in the database
         $updateQuery = "UPDATE hostel SET status='Unavailable', bookedBy='$studentID' WHERE hostelID='$hostelID'";
 
