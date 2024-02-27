@@ -23,15 +23,27 @@
     }
 
     .card {
-  width: 700px;
-  margin: auto; /* Center the card horizontally */
-  margin-top: 50px;
-  margin-bottom: 50px; /* Add margin at the bottom for spacing */
+      width: 800px;
+      margin: auto;
+      /* Center the card horizontally */
+      margin-top: 50px;
+      margin-bottom: 50px;
+      /* Add margin at the bottom for spacing */
 
+    }
+
+    .table th {
+      font-weight: bold text-align: center;
+    }
+    h5 {
+      text-align: center;"
+    }
+    .custom-modal-title {
+  text-align: center !important; /* Ensure text is centered */
+  width: 100%; /* Ensure full width */
+  margin: 0 auto; /* Center horizontally */
 }
-.table th{
-  font-weight: bold
-}
+
   </style>
 </head>
 
@@ -77,21 +89,21 @@
               </a>
             </li>
             <li class="sidebar-item">
-                            <a class="sidebar-link" href="./admin-manage-student.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-alert-circle"></i>
-                                </span>
-                                <span class="hide-menu">Manage Student</span>
-                            </a>
-                        </li>
+              <a class="sidebar-link" href="./admin-manage-booking.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-alert-circle"></i>
+                </span>
+                <span class="hide-menu">Manage Booking</span>
+              </a>
+            </li>
             <li class="sidebar-item">
-                            <a class="sidebar-link" href="./admin-manage-booking.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-alert-circle"></i>
-                                </span>
-                                <span class="hide-menu">Manage Booking</span>
-                            </a>
-                        </li>
+              <a class="sidebar-link" href="./admin-manage-student.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-alert-circle"></i>
+                </span>
+                <span class="hide-menu">Manage Student</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -109,79 +121,82 @@
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
               <h5 class="text-center mb-3 mt-2"><strong>Room Management</strong></h5>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addRoomModal">
-  Add New Room
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addRoomModalLabel">Add New Room</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="add_room.php" id="addRoomForm">
-          <div class="mb-3">
-            <label for="blockSelection" class="form-label">Block:</label>
-            <select class="form-select" id="blockSelection" name="block">
-              <option value="Block A">Block A</option>
-              <option value="Block B">Block B</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="floorSelection" class="form-label">Floor:</label>
-            <select class="form-select" id="floorSelection" name="floor">
-              <option value="Floor 1">Floor 1</option>
-              <option value="Floor 2">Floor 2</option>
-              <option value="Floor 3">Floor 3</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="unitSelection" class="form-label">Unit:</label>
-            <select class="form-select" id="unitSelection" name="unit">
-              <option value="Unit 1">Unit 1</option>
-              <option value="Unit 2">Unit 2</option>
-              <option value="Unit 3">Unit 3</option>
-              <option value="Unit 4">Unit 4</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="roomNumberSelection" class="form-label">Room Number:</label>
-            <select class="form-select" id="roomNumberSelection" name="roomNumber">
-              <option value="Room 1">Room 1</option>
-              <option value="Room 2">Room 2</option>
-              <option value="Room 3">Room 3</option>
-            </select>
-          </div>
-          <div class="text-center mt-3">
-            <button type="submit" class="btn btn-primary mb-2">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                  <div class="modal-header">
+  <h5 class="modal-title custom-modal-title" id="addRoomModalLabel">Add New Room</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
-<!-- Table to display rooms -->
-<table class="table mt-4 table-bordered table-striped">
-  <thead>
-    <tr>
-      <!-- <th>No.</th> -->
-      <th>Block</th>
-      <th>Floor</th>
-      <th>Unit</th>
-      <th>Room Number</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="roomTableBody">
-    <!-- Room data will be displayed here -->
-  </tbody>
-</table>
+
+                    <div class="modal-body">
+                      <form method="post" action="add_room.php" id="addRoomForm">
+                        <div class="mb-3">
+                          <label for="blockSelection" class="form-label">Block:</label>
+                          <select class="form-select" id="blockSelection" name="block">
+                            <option value="Block A">Block A</option>
+                            <option value="Block B">Block B</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="floorSelection" class="form-label">Floor:</label>
+                          <select class="form-select" id="floorSelection" name="floor">
+                            <option value="Floor 1">Floor 1</option>
+                            <option value="Floor 2">Floor 2</option>
+                            <option value="Floor 3">Floor 3</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="unitSelection" class="form-label">Unit:</label>
+                          <select class="form-select" id="unitSelection" name="unit">
+                            <option value="Unit 1">Unit 1</option>
+                            <option value="Unit 2">Unit 2</option>
+                            <option value="Unit 3">Unit 3</option>
+                            <option value="Unit 4">Unit 4</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="roomNumberSelection" class="form-label">Room Number:</label>
+                          <select class="form-select" id="roomNumberSelection" name="roomNumber">
+                            <option value="Room 1">Room 1</option>
+                            <option value="Room 2">Room 2</option>
+                            <option value="Room 3">Room 3</option>
+                          </select>
+                        </div>
+                        <div class="text-center mt-3">
+                          <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Table to display rooms -->
+              <table class="table mt-4 table-bordered table-striped ">
+                <thead>
+                  <tr>
+                    <!-- <th>No.</th> -->
+                    <th style="text-align: center;">Block</th>
+                    <th style="text-align: center;">Floor</th>
+                    <th style="text-align: center;">Unit</th>
+                    <th style="text-align: center;">Room Number</th>
+                    <th style="text-align: center;">Status</th>
+                    <th style="text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="roomTableBody">
+                  <!-- Room data will be displayed here -->
+                </tbody>
+              </table>
+              <div class="text-center mt-3 d-flex justify-content-center"> <!-- Center the button -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModal">Add New Room</button>
+                            </div>
             </div>
           </div>
         </div>
@@ -190,34 +205,34 @@
   </div>
   </div>
   <script>
-  // JavaScript to handle form submission and display room data
-  document.getElementById('addRoomForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const form = this;
-    const formData = new FormData(form);
-    fetch('add_room.php', {
+    // JavaScript to handle form submission and display room data
+    document.getElementById('addRoomForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const form = this;
+      const formData = new FormData(form);
+      fetch('add_room.php', {
         method: 'POST',
         body: formData
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // If room added successfully, show success message
-          alert('Room added successfully!');
-          // Redirect to admin-manage-room page
-          window.location.href = './admin-manage-room.php';
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred, please try again');
-      });
-  });
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // If room added successfully, show success message
+            alert('Room added successfully!');
+            // Redirect to admin-manage-room page
+            window.location.href = './admin-manage-room.php';
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred, please try again');
+        });
+    });
 
-  // Function to fetch and display all rooms
-  function fetchRooms() {
+    // Function to fetch and display all rooms
+    function fetchRooms() {
       fetch('get_rooms.php')
         .then(response => response.json())
         .then(data => {
@@ -226,21 +241,23 @@
           data.forEach(room => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${room.block}</td>
-                <td>${room.floor}</td>
-                <td>${room.unit}</td>
-                <td>${room.roomNumber}</td>
+                <td style="text-align: center;">${room.block}</td>
+                <td style="text-align: center;">${room.floor}</td>
+                <td style="text-align: center;">${room.unit}</td>
+                <td style="text-align: center;">${room.roomNumber}</td>
                 <td>
                   <select class="form-select" onchange="updateRoomStatus(${room.hostelID}, this.value)">
-                    <option value="Available" ${room.status === 'Available' ? 'selected' : ''}>Available</option>
-                    <option value="Unavailable" ${room.status === 'Unavailable' ? 'selected' : ''}>Unavailable</option>
+                    <option style="text-align: center;" value="Available" ${room.status === 'Available' ? 'selected' : ''}>Available</option>
+                    <option style="text-align: center;" value="Unavailable" ${room.status === 'Unavailable' ? 'selected' : ''}>Unavailable</option>
                   </select>
                 </td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="deleteRoomStatus(${room.hostelID})">
-                        <i class="ti ti-trash"></i>
-                    </button>
-                </td>
+                <td style="text-align: center;">
+    <div style="display: inline-block;">
+        <button class="btn btn-danger btn-sm" onclick="deleteRoomStatus(${room.hostelID})">
+            <i class="ti ti-trash"></i>
+        </button>
+    </div>
+</td>
             `;
             roomTableBody.appendChild(row);
           });
@@ -248,46 +265,46 @@
     }
 
     function deleteRoomStatus(hostelID) {
-    if (confirm('Are you sure you want to delete this room?')) {
+      if (confirm('Are you sure you want to delete this room?')) {
         fetch('delete_room.php', {
-            method: 'POST',
-            body: JSON.stringify({ hostelID: hostelID }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to delete room');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                fetchRooms(); // Reload the room list
-                alert('Room deleted successfully!');
-            } else {
-                alert('Failed to delete room');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred, please try again');
-        });
-    }
-}
-
-function updateRoomStatus(hostelID, status) {
-      fetch('update_room_status.php', {
           method: 'POST',
-          body: JSON.stringify({
-            hostelID: hostelID,
-            status: status
-          }),
+          body: JSON.stringify({ hostelID: hostelID }),
           headers: {
             'Content-Type': 'application/json'
           },
         })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to delete room');
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.success) {
+              fetchRooms(); // Reload the room list
+              alert('Room deleted successfully!');
+            } else {
+              alert('Failed to delete room');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred, please try again');
+          });
+      }
+    }
+
+    function updateRoomStatus(hostelID, status) {
+      fetch('update_room_status.php', {
+        method: 'POST',
+        body: JSON.stringify({
+          hostelID: hostelID,
+          status: status
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
         .then(response => {
           if (!response.ok) {
             throw new Error('Failed to update room status');
@@ -309,9 +326,9 @@ function updateRoomStatus(hostelID, status) {
     }
 
 
-  // Call fetchRooms function when the page loads
-  fetchRooms();
-</script>
+    // Call fetchRooms function when the page loads
+    fetchRooms();
+  </script>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/sidebarmenu.js"></script>

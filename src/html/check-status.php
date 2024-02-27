@@ -20,6 +20,9 @@ if (!isset($_SESSION['studentID'])) {
     body {
       background: url('../assets/images/backgrounds/backimage5.png') no-repeat center center fixed;
       background-size: cover;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
 
     .logout-btn {
@@ -29,10 +32,14 @@ if (!isset($_SESSION['studentID'])) {
     }
 
     .card {
-      max-width: 650px;
+      max-width: 575px;
       margin: auto;
       margin-top: 50px;
     }
+    .card-body {
+  font-size: 18px; /* Adjust the font size as needed */
+}
+
   </style>
 </head>
 
@@ -100,7 +107,7 @@ if (!isset($_SESSION['studentID'])) {
         <div class="col-md-6 mt-4 mx-auto">
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
-            <h5 class="text-center mb-4 mt-2"><strong>Booking Details</strong></h5>
+            <h4 class="text-center mb-4 mt-4"><strong>Booking Details</strong></h4>
                             <div id="bookingDetails"></div>
                             <div class="mb-4" id="makeNewBookingBtnContainer"></div> <!-- Container for booking details -->
             </div>
@@ -133,13 +140,13 @@ fetch('get_booking_status.php')
 
                 // Construct HTML with dynamically colored status
                 bookingDetailsContainer.innerHTML = `
-                    <p><strong>Name:</strong> ${bookingDetails.fullname}</p>
-                    <p><strong>Matric ID:</strong> ${bookingDetails.studentID}</p>
-                    <p><strong>Block:</strong> ${bookingDetails.block}</p>
-                    <p><strong>Floor:</strong> ${bookingDetails.floor}</p>
-                    <p><strong>Unit:</strong> ${bookingDetails.unit}</p>
-                    <p><strong>Room Number:</strong> ${bookingDetails.roomNumber}</p>
-                    <p><strong>Booking Date:</strong> ${bookingDetails.created_at}</p>
+                    <p><strong>Name&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</strong> ${bookingDetails.fullname}</p>
+                    <p><strong>Matric ID &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</strong> ${bookingDetails.studentID}</p>
+                    <p><strong>Block&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</strong> ${bookingDetails.block}</p>
+                    <p><strong>Floor&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</strong> ${bookingDetails.floor}</p>
+                    <p><strong>Unit&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</strong> ${bookingDetails.unit}</p>
+                    <p><strong>Room Number &nbsp&nbsp:</strong> ${bookingDetails.roomNumber}</p>
+                    <p><strong>Booking Date &nbsp&nbsp&nbsp&nbsp:</strong> ${bookingDetails.created_at}</p>
                     <p><strong>Booking Status:</strong> <span style="color: ${statusColor}; font-weight: bold;">${bookingDetails.status}</span></p>
                 `;
                     // Check if the booking status is "REJECTED"
