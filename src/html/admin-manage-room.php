@@ -230,14 +230,14 @@
           data.forEach(room => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${room.block}</td>
-                <td>${room.floor}</td>
-                <td>${room.unit}</td>
-                <td>${room.roomNumber}</td>
+                <td style="text-align: center;">${room.block}</td>
+                <td style="text-align: center;">${room.floor}</td>
+                <td style="text-align: center;">${room.unit}</td>
+                <td style="text-align: center;">${room.roomNumber}</td>
                 <td>
                   <select class="form-select" onchange="updateRoomStatus(${room.hostelID}, this.value)">
-                    <option value="Available" ${room.status === 'Available' ? 'selected' : ''}>Available</option>
-                    <option value="Unavailable" ${room.status === 'Unavailable' ? 'selected' : ''}>Unavailable</option>
+                    <option style="text-align: center;" value="Available" ${room.status === 'Available' ? 'selected' : ''}>Available</option>
+                    <option style="text-align: center;" value="Unavailable" ${room.status === 'Unavailable' ? 'selected' : ''}>Unavailable</option>
                   </select>
                 </td>
                 <td style="text-align: center;">

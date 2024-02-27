@@ -167,12 +167,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <table class="table mt-4 table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th>Block</th>
-                    <th>Floor</th>
-                    <th>Unit</th>
-                    <th>Room Number</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th style="text-align: center;">Block</th>
+                    <th style="text-align: center;">Floor</th>
+                    <th style="text-align: center;">Unit</th>
+                    <th style="text-align: center;">Room Number</th>
+                    <th style="text-align: center;">Status</th>
+                    <th style="text-align: center;">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="roomTableBody">
@@ -201,12 +201,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (statusFilter === 'All' || room.status === statusFilter) {
               const row = document.createElement('tr');
               row.innerHTML = `
-              <td>${room.block}</td>
-              <td>${room.floor}</td>
-              <td>${room.unit}</td>
-              <td>${room.roomNumber}</td>
-              <td>${room.status}</td>
-              <td>
+              <td style="text-align: center;">${room.block}</td>
+              <td style="text-align: center;">${room.floor}</td>
+              <td style="text-align: center;">${room.unit}</td>
+              <td style="text-align: center;">${room.roomNumber}</td>
+              <td style="text-align: center;">${room.status}</td>
+              <td style="text-align: center;">
               <button class="btn btn-danger btn-sm" onclick="bookHostel(${room.hostelID})" ${room.status !== 'Available' ? 'disabled' : ''}>
                     Book
                 </button>

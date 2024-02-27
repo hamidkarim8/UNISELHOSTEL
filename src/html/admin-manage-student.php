@@ -200,20 +200,20 @@
             const row = document.createElement('tr');
             const room = student.room; // Move the declaration here
             row.innerHTML = `
-    <td>${student.fullname}</td>
-    <td>${student.studentID}</td>
-    <td>${room}</td>
+    <td  style="text-align: center;">${student.fullname}</td>
+    <td  style="text-align: center;">${student.studentID}</td>
+    <td  style="text-align: center;">${room}</td>
     <td>
     <select class="form-select status-select" data-student-id="${student.studentID}" ${student.bookingStatus !== 'APPROVED' ? 'disabled' : ''} style="${student.bookingStatus !== 'APPROVED' ? 'background-color: #f0f0f0; color: #999; cursor: not-allowed;' : ''}">
-        <option value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
-        <option value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
-        <option value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
+        <option  style="text-align: center;" value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
+        <option  style="text-align: center;" value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
+        <option  style="text-align: center;" value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
     </select>
 </td>
     <td>
         <select class="form-select blacklist-select" data-student-id="${student.studentID}">
-            <option value="ELIGIBLE" ${student.blacklist === 'ELIGIBLE' ? 'selected' : ''}>Eligible</option>
-            <option value="BLACKLISTED" ${student.blacklist === 'BLACKLISTED' ? 'selected' : ''}>Blacklisted</option>
+            <option  style="text-align: center;" value="ELIGIBLE" ${student.blacklist === 'ELIGIBLE' ? 'selected' : ''}>Eligible</option>
+            <option  style="text-align: center;" value="BLACKLISTED" ${student.blacklist === 'BLACKLISTED' ? 'selected' : ''}>Blacklisted</option>
         </select>
     </td>
 `;

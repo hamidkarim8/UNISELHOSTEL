@@ -16,42 +16,47 @@
     }
 
     .modal-container {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.7);
-}
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto; /* Adjust margin for vertical positioning */
-  padding: 40px; /* Increase padding for better spacing */
-  border: 2px solid #f78f1e; /* Add border for better visibility */
-  width: 60%; /* Adjust width as needed */
-  max-width: 500px; /* Set maximum width to prevent modal from becoming too wide */
-  border-radius: 10px; /* Add border-radius for rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add box-shadow for depth */
-}
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      /* Adjust margin for vertical positioning */
+      padding: 40px;
+      /* Increase padding for better spacing */
+      border: 2px solid #f78f1e;
+      /* Add border for better visibility */
+      width: 60%;
+      /* Adjust width as needed */
+      max-width: 500px;
+      /* Set maximum width to prevent modal from becoming too wide */
+      border-radius: 10px;
+      /* Add border-radius for rounded corners */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      /* Add box-shadow for depth */
+    }
 
-.modal-content p {
-  margin-bottom: 20px;
-}
+    .modal-content p {
+      margin-bottom: 20px;
+    }
 
-.modal-content button {
-  background-color: #f78f1e;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-
+    .modal-content button {
+      background-color: #f78f1e;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -124,13 +129,12 @@
                       <input type="password" class="form-control" id="password" name="password">
                     </div>
 
-                    <button type="submit" name="loginBtn"
-                      class="btn btn-primary w-100 py-8 fs-4 mb-3 rounded-2"
+                    <button type="submit" name="loginBtn" class="btn btn-primary w-100 py-8 fs-4 mb-3 rounded-2"
                       style="background-color: #F78F1E; color: #fff;">Log in</button>
 
                     <div class="d-flex align-items-center justify-content-center mb-2">
-                      <a class="text-primary fw-bold" href="./admin-login.php"
-                        style="text-decoration: underline;">Login as Admin</a>
+                      <a class="text-primary fw-bold" href="./admin-login.php" style="text-decoration: underline;">Login
+                        as Admin</a>
                     </div>
                     <div class="d-flex align-items-center justify-content-center">
                       <p class="fs-4 mb-0 fw-bold">Haven't Registered?</p>

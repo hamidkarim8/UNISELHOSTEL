@@ -164,11 +164,11 @@
               const row = document.createElement('tr');
               const room = student.room; // Move the declaration here
               row.innerHTML = `
-                    <td>${student.fullname}</td>
-                    <td>${student.studentID}</td>
-                    <td>${room}</td>
-                    <td>${student.created_at}</td>
-                    <td style="color: ${getStatusColor(student.status)};">
+                    <td style="text-align: center;">${student.fullname}</td>
+                    <td style="text-align: center;">${student.studentID}</td>
+                    <td style="text-align: center;">${room}</td>
+                    <td style="text-align: center;">${student.created_at}</td>
+                    <td  style="text-align: center;" style="color: ${getStatusColor(student.status)};">
                         ${student.status === 'PENDING' ? `
                             <button class="btn btn-success btn-sm" onclick="approveBooking(${student.bookingID})"}>
                                 Approve
