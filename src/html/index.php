@@ -11,6 +11,9 @@
         body {
             background: url('../assets/images/backgrounds/backimage5.png') no-repeat center center fixed;
             background-size: cover;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
         .logout-btn {
@@ -84,7 +87,8 @@
             <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                     <li class="nav-item dropdown">
-                        <a href="./student-login.php" class="btn btn-outline-primary mx-3 mt-4 d-block logout-btn">Logout</a>
+                        <a href="./student-login.php"
+                            class="btn btn-outline-primary mx-3 mt-4 d-block logout-btn">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -98,12 +102,12 @@
                             <?php
                             // Include the PHP script to fetch memos
                             include 'get_memos.php';
-                            
+
                             // Loop through the memos and display them
                             foreach ($memos as $memo) {
-                                echo'<h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>';
-                                echo'<h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>';
-                                echo'<h5 class="text-center mb-4">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>';
+                                echo '<h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>';
+                                echo '<h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>';
+                                echo '<h5 class="text-center mb-4">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>';
                                 echo '<p class="text-left mb-1"><strong>FROM</strong>: ' . $memo['sender'] . '</p>';
                                 echo '<p class="text-left mb-1"><strong>TO</strong>: ' . $memo['recipient'] . '</p>';
                                 echo '<p class="text-left mb-1"><strong>DATE</strong>: ' . $memo['date'] . '</p>';

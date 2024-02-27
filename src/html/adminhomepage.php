@@ -11,6 +11,9 @@
         body {
             background: url('../assets/images/backgrounds/backimage5.png') no-repeat center center fixed;
             background-size: cover;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
         .logout-btn {
@@ -38,7 +41,6 @@
             display: flex;
             justify-content: center;
         }
-        
     </style>
 </head>
 
@@ -87,14 +89,6 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./admin-manage-student.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-alert-circle"></i>
-                                </span>
-                                <span class="hide-menu">Manage Student</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a class="sidebar-link" href="./admin-manage-booking.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-alert-circle"></i>
@@ -102,7 +96,16 @@
                                 <span class="hide-menu">Manage Booking</span>
                             </a>
                         </li>
-          </ul>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./admin-manage-student.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-alert-circle"></i>
+                                </span>
+                                <span class="hide-menu">Manage Student</span>
+                            </a>
+                        </li>
+
+                    </ul>
                     </ul>
                 </nav>
             </div>
@@ -132,14 +135,14 @@
                             <?php
                             // Include the PHP script to fetch memos
                             include 'get_memos.php';
-                            
+
                             // Loop through the memos and display them
                             foreach ($memos as $memo) {
-                                echo'<h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>';
-                                echo'<h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>';
-                                echo'<h5 class="text-center mb-4">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>';
+                                echo '<h5 class="text-center">MEMO RESIDENSI PELAJAR</h5>';
+                                echo '<h5 class="text-center">KOLEJ KEDIAMAN BESTARI JAYA</h5>';
+                                echo '<h5 class="text-center mb-4">PEMBANGUNAN KOMUNITI DAN PELAJAR</h5>';
                                 echo '<p class="text-left mb-1"><strong>FROM</strong>: ' . $memo['sender'] . '</p>';
-                                echo '<p class="text-left mb-1"><strong>TO</strong>: '. $memo['recipient'] . '</p>';
+                                echo '<p class="text-left mb-1"><strong>TO</strong>: ' . $memo['recipient'] . '</p>';
                                 echo '<p class="text-left mb-1"><strong>DATE</strong>: ' . $memo['date'] . '</p>';
                                 echo '<hr>';
                                 echo '<p class="mb-2" style="text-align: center;">' . $memo['greeting'] . '</p>';
@@ -182,11 +185,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="memo_greeting" class="form-label">Greeting:</label>
-                            <textarea class="form-control" name="memo_greeting" id="memo_greeting" rows="6" required></textarea>
+                            <textarea class="form-control" name="memo_greeting" id="memo_greeting" rows="6"
+                                required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="memo_content" class="form-label">Content:</label>
-                            <textarea class="form-control" name="memo_content" id="memo_content" rows="6" required></textarea>
+                            <textarea class="form-control" name="memo_content" id="memo_content" rows="6"
+                                required></textarea>
                         </div>
 
                     </form>
@@ -200,7 +205,7 @@
     </div>
 
     <script>
-                function openUpdateModal() {
+        function openUpdateModal() {
             // Show the modal
             var updateMemoModal = new bootstrap.Modal(document.getElementById('updateMemoModal'));
             updateMemoModal.show();
