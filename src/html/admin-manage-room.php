@@ -33,7 +33,8 @@
     }
 
     .table th {
-      font-weight: bold text-align: center;
+      font-weight: bold;
+      text-align: center;
     }
     h5 {
       text-align: center;"

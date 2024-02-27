@@ -39,6 +39,27 @@
       width: auto;
       min-width: fit-content;
     }
+
+    /* Added CSS */
+    .search-label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .search-input {
+      width: auto;
+      min-width: fit-content;
+    }
+
+    .mb-3.d-flex {
+      flex-direction: row;
+    }
+
+    .mb-3.d-flex>div {
+      margin-right: 10px;
+      /* Adjust margin as needed */
+    }
   </style>
 </head>
 
@@ -99,7 +120,7 @@
                 <span class="hide-menu">Manage Student</span>
               </a>
             </li>
-         
+
           </ul>
           </ul>
         </nav>
@@ -119,15 +140,24 @@
             <div class="card-body text-justify bg-light py-1 rounded p-4">
               <h5 class="text-center mb-3 mt-2"><strong>Booking Management</strong></h5>
               <!-- Button filter -->
-              <div class="mb-3">
-                <label for="statusFilter" class="form-label">Filter by Status:</label>
-                <select class="form-select" id="statusFilter" onchange="fetchBooking()">
-                  <option value="All">All</option>
-                  <option value="PENDING">Pending</option>
-                  <option value="APPROVED">Approved</option>
-                  <option value="REJECTED">Rejected</option>
-                </select>
+
+              <div class="mb-3 d-flex align-items-center justify-content-between">
+                <div>
+                  <label for="statusFilter" class="form-label">Filter by Status:</label>
+                  <select class="form-select" id="statusFilter" onchange="fetchBooking()">
+                    <option value="All">All</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="APPROVED">Approved</option>
+                    <option value="REJECTED">Rejected</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="searchInput" class="search-label me-2">Search:</label>
+                  <input type="text" id="searchInput" class="form-control search-input" placeholder="Enter Matric No"
+                    aria-label="Enter Matric No" aria-describedby="basic-addon2">
+                </div>
               </div>
+
               <!-- Table to display rooms -->
               <table class="table mt-4 table-bordered table-striped">
                 <thead>
@@ -144,6 +174,8 @@
                   <!-- Room data will be displayed here -->
                 </tbody>
               </table>
+              <div id="noResultRow" class="alert alert-warning" style="display: none;">No matric ID found</div>
+
             </div>
           </div>
         </div>
@@ -151,6 +183,38 @@
     </div>
   </div>
   <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('searchInput');
+
+      searchInput.addEventListener('input', function () {
+        const filter = searchInput.value.toUpperCase();
+        const rows = document.querySelectorAll('#roomTableBody tr');
+        let found = false; // Flag to track if any matching result found
+
+        rows.forEach(function (row) {
+          const studentIDCell = row.cells[1]; // Adjust the index if the column order changes
+          if (studentIDCell) {
+            const studentID = studentIDCell.textContent || studentIDCell.innerText;
+            if (studentID.toUpperCase().indexOf(filter) > -1) {
+              row.style.display = '';
+              found = true; // Set flag to true if a match is found
+            } else {
+              row.style.display = 'none';
+            }
+          }
+        });
+
+        // Show or hide the "No matric ID found" message based on the flag
+        const noResultRow = document.getElementById('noResultRow');
+        if (found) {
+          noResultRow.style.display = 'none'; // Hide the message if a match is found
+        } else {
+          noResultRow.style.display = ''; // Show the message if no match is found
+        }
+      });
+    });
+
 
     function fetchBooking() {
       const statusFilter = document.getElementById('statusFilter').value;
@@ -264,6 +328,7 @@
         }
       });
     });
+
 
     // Call fetchRooms function when the page loads
     fetchBooking();

@@ -45,6 +45,15 @@
     .modal-footer {
         justify-content: center;
     }
+    h5 {
+      text-align: center;"
+    }
+    .custom-modal-title {
+  text-align: center !important; /* Ensure text is centered */
+  width: 100%; /* Ensure full width */
+  margin: 0 auto; /* Center horizontally */
+}
+
     </style>
 </head>
 
@@ -169,10 +178,10 @@
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateMemoModalLabel">New Memo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+            <div class="modal-header">
+  <h5 class="modal-title custom-modal-title" id="addRoomModalLabel">New Memo</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
                 <div class="modal-body">
                     <form id="updateMemoForm">
                         <div class="mb-3">

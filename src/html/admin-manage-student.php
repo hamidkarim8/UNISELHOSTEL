@@ -125,7 +125,7 @@
             <div class="card-body text-justify bg-light py-1 rounded p-4">
               <h5 class="text-center mb-3 mt-2"><strong>Student Management</strong></h5>
               <!-- Added label for the search input -->
-              <div class="mb-3 d-flex align-items-center">
+              <div class="mb-3 d-flex align-items-center ">
                 <label for="searchInput" class="search-label me-2">Search:</label>
                 <input type="text" id="searchInput" class="form-control search-input" placeholder="Enter Matric No"
                   aria-label="Enter Matric No" aria-describedby="basic-addon2">
