@@ -232,14 +232,14 @@
                     <td style="text-align: center;">${student.studentID}</td>
                     <td style="text-align: center;">${room}</td>
                     <td style="text-align: center;">${student.created_at}</td>
-                    <td  style="text-align: center;" style="color: ${getStatusColor(student.status)};">
-                        ${student.status === 'PENDING' ? `
-                            <button class="btn btn-success btn-sm" onclick="approveBooking(${student.bookingID})"}>
-                                Approve
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="rejectBooking(${student.bookingID})"}>
-                                Reject
-                            </button>` : student.status}
+                    <td style="text-align: center; color: ${getStatusColor(student.status)};">
+                      ${student.status === 'PENDING' ? `
+                        <button class="btn btn-success btn-sm" onclick="approveBooking(${student.bookingID})"}>
+                          Approve
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="rejectBooking(${student.bookingID})"}>
+                          Reject
+                        </button>` : student.status}
                     </td>
                 `;
               roomTableBody.appendChild(row);

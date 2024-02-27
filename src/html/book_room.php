@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hostelID = mysqli_real_escape_string($conn, $data->hostelID);
 
         // Check if the student has a booking with approved or pending status
-        $bookingQuery = "SELECT * FROM bookingList WHERE studentID='$studentID' ORDER BY created_At DESC LIMIT 1";
+        $bookingQuery = "SELECT * FROM bookinglist WHERE studentID='$studentID' ORDER BY created_At DESC LIMIT 1";
         $bookingResult = mysqli_query($conn, $bookingQuery);
 
         if ($bookingResult) {
@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Update room status in the database
         $updateQuery = "UPDATE hostel SET status='Unavailable', bookedBy='$studentID' WHERE hostelID='$hostelID'";
 
-        // Insert booking information into bookingList table
-        $insertQuery = "INSERT INTO bookingList (hostelID, studentID, created_At, status) VALUES ('$hostelID', '$studentID', NOW(),'PENDING')";
+        // Insert booking information into bookinglist table
+        $insertQuery = "INSERT INTO bookinglist (hostelID, studentID, created_At, status) VALUES ('$hostelID', '$studentID', NOW(),'PENDING')";
 
         // Perform the update query
         if (mysqli_query($conn, $updateQuery)) {

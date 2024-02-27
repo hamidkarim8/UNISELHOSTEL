@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bookingID = mysqli_real_escape_string($conn, $data->bookingID);
 
         // Update booking status in the database
-        $updateQuery = "UPDATE bookingList SET status='APPROVED' WHERE bookingID='$bookingID'";
+        $updateQuery = "UPDATE bookinglist SET status='APPROVED' WHERE bookingID='$bookingID'";
 
         if (mysqli_query($conn, $updateQuery)) {
             $response = array("success" => true);

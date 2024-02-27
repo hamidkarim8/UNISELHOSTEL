@@ -16,15 +16,15 @@ IFNULL(bookinglist.status, 'No Booking Record') AS bookingStatus
 FROM 
 student 
 LEFT JOIN 
-bookingList ON student.studentID = bookingList.studentID 
+bookinglist ON student.studentID = bookinglist.studentID 
 LEFT JOIN 
-hostel ON hostel.hostelID = bookingList.hostelID
+hostel ON hostel.hostelID = bookinglist.hostelID
 WHERE 
-bookingList.bookingID IN (
+bookinglist.bookingID IN (
     SELECT MAX(bookingID) 
-    FROM bookingList 
+    FROM bookinglist 
     GROUP BY studentID
-) OR bookingList.bookingID IS NULL;
+) OR bookinglist.bookingID IS NULL;
 ";
 
 $result = $conn->query($sql);

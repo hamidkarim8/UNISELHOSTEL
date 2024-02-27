@@ -10,13 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bookingID = mysqli_real_escape_string($conn, $data->bookingID);
 
         // Update booking status in the database
-        $updateQuery = "UPDATE bookingList SET status='REJECTED' WHERE bookingID='$bookingID'";
+        $updateQuery = "UPDATE bookinglist SET status='REJECTED' WHERE bookingID='$bookingID'";
 
         // Add query to set bookedBy to NULL in hostel table
         $updateHostelQuery = "UPDATE hostel 
-                              INNER JOIN bookingList ON hostel.hostelID = bookingList.hostelID
+                              INNER JOIN bookinglist ON hostel.hostelID = bookinglist.hostelID
                               SET hostel.bookedBy = NULL, hostel.status = 'Available'
-                              WHERE bookingList.bookingID = '$bookingID'";
+                              WHERE bookinglist.bookingID = '$bookingID'";
 
         if (mysqli_query($conn, $updateQuery) && mysqli_query($conn, $updateHostelQuery)) {
             $response = array("success" => true);

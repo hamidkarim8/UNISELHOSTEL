@@ -3,7 +3,7 @@ include_once 'db_connection.php';
 
 $students = array();
 
-$sql = "SELECT bookinglist.bookingID, student.fullname, student.studentID, hostel.block, hostel.floor, hostel.unit, hostel.roomNumber, bookingList.status, bookingList.created_at FROM student JOIN bookingList ON student.studentID = bookingList.studentID JOIN hostel ON hostel.hostelID = bookingList.hostelID WHERE student.studentID = bookingList.studentID";
+$sql = "SELECT bookinglist.bookingID, student.fullname, student.studentID, hostel.block, hostel.floor, hostel.unit, hostel.roomNumber, bookinglist.status, bookinglist.created_at FROM student JOIN bookinglist ON student.studentID = bookinglist.studentID JOIN hostel ON hostel.hostelID = bookinglist.hostelID WHERE student.studentID = bookinglist.studentID";
 
 $result = $conn->query($sql);
 
