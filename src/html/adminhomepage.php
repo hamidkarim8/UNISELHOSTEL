@@ -41,6 +41,10 @@
             display: flex;
             justify-content: center;
         }
+           /* Center the button within the modal footer */
+    .modal-footer {
+        justify-content: center;
+    }
     </style>
 </head>
 
@@ -197,7 +201,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              
                     <button type="button" class="btn btn-primary" id="updateMemoBtn">Submit Memo</button>
                 </div>
             </div>

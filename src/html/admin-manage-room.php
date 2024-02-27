@@ -35,6 +35,15 @@
     .table th {
       font-weight: bold text-align: center;
     }
+    h5 {
+      text-align: center;"
+    }
+    .custom-modal-title {
+  text-align: center !important; /* Ensure text is centered */
+  width: 100%; /* Ensure full width */
+  margin: 0 auto; /* Center horizontally */
+}
+
   </style>
 </head>
 
@@ -112,20 +121,19 @@
           <div class="card">
             <div class="card-body text-justify bg-light py-1 rounded p-4">
               <h5 class="text-center mb-3 mt-2"><strong>Room Management</strong></h5>
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addRoomModal">
-                Add New Room
-              </button>
+
 
               <!-- Modal -->
               <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="addRoomModalLabel">Add New Room</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                  <div class="modal-header">
+  <h5 class="modal-title custom-modal-title" id="addRoomModalLabel">Add New Room</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+
                     <div class="modal-body">
                       <form method="post" action="add_room.php" id="addRoomForm">
                         <div class="mb-3">
@@ -186,6 +194,9 @@
                   <!-- Room data will be displayed here -->
                 </tbody>
               </table>
+              <div class="text-center mt-3 d-flex justify-content-center"> <!-- Center the button -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModal">Add New Room</button>
+                            </div>
             </div>
           </div>
         </div>
