@@ -204,12 +204,12 @@ document.addEventListener('DOMContentLoaded', function() {
     <td>${student.studentID}</td>
     <td>${room}</td>
     <td>
-        <select class="form-select status-select" data-student-id="${student.studentID}">
-            <option value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
-            <option value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
-            <option value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
-        </select>
-    </td>
+    <select class="form-select status-select" data-student-id="${student.studentID}" ${student.bookingStatus !== 'APPROVED' ? 'disabled' : ''} style="${student.bookingStatus !== 'APPROVED' ? 'background-color: #f0f0f0; color: #999; cursor: not-allowed;' : ''}">
+        <option value="PENDING" ${student.status === 'PENDING' ? 'selected' : ''}>Default</option>
+        <option value="CHECKEDIN" ${student.status === 'CHECKEDIN' ? 'selected' : ''}>Checked in</option>
+        <option value="CHECKEDOUT" ${student.status === 'CHECKEDOUT' ? 'selected' : ''}>Checked out</option>
+    </select>
+</td>
     <td>
         <select class="form-select blacklist-select" data-student-id="${student.studentID}">
             <option value="ELIGIBLE" ${student.blacklist === 'ELIGIBLE' ? 'selected' : ''}>Eligible</option>

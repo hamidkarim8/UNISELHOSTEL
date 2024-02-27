@@ -207,7 +207,7 @@
           // Redirect to admin-manage-room page
           window.location.href = './admin-manage-room.php';
         } else {
-          alert('Failed to add room');
+          alert(data.message);
         }
       })
       .catch(error => {
