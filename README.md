@@ -1,16 +1,17 @@
-# Bootstrap w/ Vite
+# UNISEL Hostel Management System
 
-Include [Bootstrap](https://getbootstrap.com)'s source Sass and individual JavaScript plugins with [Vite](https://vitejs.dev/).
+Welcome to the UNISEL Hostel Management System! This system is designed to help manage hostel room bookings, student information, and administrative tasks for a university hostel. It is built using PHP for server-side scripting, MySQL for database management, and CSS/JS for the frontend.
 
-## Edit in browser
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/twbs/examples/tree/main/vite?file=index.html)
+## Features
+- **Room Booking:** Students can book hostel rooms online.
+- **Booking Management:** Administrators can manage room bookings, approve or reject bookings.
+- **Student Management:** Administrators can manage student information, including room assignments.
+- **Role-based Access:** Different roles for students and administrators.
+- **Search and Filter:** Easily search and filter rooms based on status, student information, etc.
+- **Error Handling:** Comprehensive error handling and validation.
 
-## How to use
-
-```sh
-git clone https://github.com/twbs/examples.git
-cd examples/vite/
-npm install
-npm start
-```
+## Technologies Used
+- **Backend:** PHP, MySQL
+- **Frontend:** HTML, CSS, JavaScript
+- **Other Libraries:** Bootstrap for UI components, AJAX for asynchronous requests.
